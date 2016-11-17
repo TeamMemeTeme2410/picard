@@ -125,9 +125,10 @@ class AcoustIDClient(QtCore.QObject):
                             parse_recording(recording)
                         log.debug("AcoustID: Lookup successful for '%s'", file.filename)
                         if config.setting["do_log_matching"]:
-                            log.info("AcoustID: File '%s' matched to '%s' by %s", file.filename, 'Song Name', 'Artist')
-                            print(file.metadata['artist'])
-                    print(file)
+                            song = result.recordings[0].recording[0]
+                            sname = song.title[0].text
+                            sartist = song.artists[0].artist[0].name[0].text
+                            log.info("AcoustID: File '%s' matched to '%s' by %s", file.filename, sname, sartist)
             else:
                 mparms = {
                     'error': document.response[0].error[0].message[0].text,
