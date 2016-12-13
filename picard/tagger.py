@@ -361,7 +361,7 @@ class Tagger(QtGui.QApplication):
                 if file:
                     temp_files[filename] = file
                     new_files.append(file)
-          if new_files and self.check_load(new_files):
+        if new_files and self.check_load(new_files):
             for filename in tmp_files:
                 file = open_file(filename)
                 self.files[filename] = file
