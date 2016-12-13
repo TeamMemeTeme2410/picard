@@ -347,7 +347,6 @@ class Tagger(QtGui.QApplication):
             ignoreregex = re.compile(pattern)
         ignore_hidden = config.setting["ignore_hidden_files"]
         new_files = []
-        tmp_files = {}
         for filename in filenames:
             filename = os.path.normpath(os.path.realpath(filename))
             if ignore_hidden and is_hidden(filename):
@@ -359,12 +358,9 @@ class Tagger(QtGui.QApplication):
             if filename not in self.files:
                 file = open_file(filename)
                 if file:
-                    tmp_files[filename] = file
+                    self.files[filename] = file
                     new_files.append(file)
-        if new_files and self.check_load(new_files):
-            for filename in tmp_files:
-                file = open_file(filename)
-                self.files[filename] = file
+        if new_files:
             log.debug("Adding files %r", new_files)
             new_files.sort(key=lambda x: x.filename)
             if target is None or target is self.unmatched_files:
